@@ -1,3 +1,25 @@
 # Application properties that need to be
 # embedded within the web application can be included here
 
+server:
+  servlet:
+    context-path: /cas
+  port: 8443
+  ssl:
+    key-store: file:/etc/cas/thekeystore
+    key-store-password: changeit
+    key-password: changeit
+
+cas:
+  authn:
+    jdbc:
+      query[0]:
+        driver-class: "com.mysql.cj.jdbc.Driver"
+        url: "jdbc:mysql://3.38.247.51:3306/test?authReconnect=true&allowMultiQueries=true&serverTimezone=UTC"
+        sql: "select id, login_id, login_pw from test.sso where login_id = ?;"
+        user: "mysql"
+        password: "root"
+        field-user: "login_id"
+        field-password: "login_pw"
+        password-encoder:
+          type: "NONE"
